@@ -67,7 +67,7 @@ choice = ''
 
 while not choice is 'q':
     print(f"You are at the {player.room.name}. {player.room.desc}")
-    choice = input(f"['i'] view inventory ['e'] explore room ['a'] adventure onward ")
+    choice = input(f"['i'] view inventory ['e'] explore room ['a'] adventure onward ['q'] quit ")
 
     if choice is 'i':
         player.check_inventory()
