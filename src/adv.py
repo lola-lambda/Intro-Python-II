@@ -88,7 +88,7 @@ while not choice is 'q':
                 print(f"You took the {item.name}")
 
     elif choice is 'a':
-        move_options = [" ['q'] Quit'"]
+        move_options = [" ['q'] quit"]
         for move in moves[room_type]:
             move_options.append(f"{[move['dir']]} {room[move['dest']].name} ")
         choice = input(f"Where would you like to go?" + ' '.join(move_options) + ' ')
