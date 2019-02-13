@@ -66,11 +66,11 @@ choice = ''
 
 while not choice is 'q':
     print(f"You are at the {player.room.name}. {player.room.desc}")
-    choice = input(f"['i'] view inventory ['e'] explore room ['a'] adventure onward ['q'] quit ")
+    choice = input("['i'] view inventory ['e'] explore room ['a'] adventure onward ['q'] quit ")
 
     if choice is 'i':
         player.check_inventory()
-        action = input(f"[drop item-name] to drop an item or enter to go back: ")
+        action = input("[drop item-name] to drop an item or enter to go back: ")
         words = action.split()
         if len(words) > 1 and words[0] == 'drop':
             for word in words:
@@ -82,7 +82,7 @@ while not choice is 'q':
 
     elif choice is 'e':
         room[type].print_items()
-        action = input(f"[take item-name] to take an item or enter to go back: ")
+        action = input("[take item-name] to take an item or enter to go back: ")
         words = action.split()
         if len(words) > 1 and words[0] == 'take':
             for word in words:
@@ -96,7 +96,7 @@ while not choice is 'q':
         move_options = [" ['q'] quit"]
         for move in moves[type]:
             move_options.append(f"{[move['dir']]} {room[move['dest']].name} ")
-        choice = input(f"Where would you like to go?" + ' '.join(move_options) + ' ')
+        choice = input(f"Where would you like to go?" + " ".join(move_options) + " ")
         prevRoom = type
         for move in moves[type]:
             if move['dir'] is choice:
@@ -104,9 +104,11 @@ while not choice is 'q':
                 player.move_rooms(room[move['dest']])
                 type = move['dest']
         if prevRoom == type:
-            print('Invalid input, try again...')
+            print("Unknown command, try again...")
+    
     elif choice is 'q':
         break
+    
     else:
-        print('Invalid input, try again...')
+        print("Unknown command, try again...")
 print(f"See you next time, {player.name}")
