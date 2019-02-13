@@ -57,9 +57,8 @@ moves = {
 # Game initialization
 
 name = input("Hello there, dear adventurer, what is your name? ")
-room_type = 'outside'
-player = Player(name, room[room_type])
-
+type = 'outside'
+player = Player(name, room[type])
 print(f"Welcome, {player.name}!") 
 choice = ''
 
@@ -72,33 +71,39 @@ while not choice is 'q':
     if choice is 'i':
         player.check_inventory()
         action = input(f"[drop item-name] to drop an item or enter to go back: ")
-        for item in player.items:
-            if action == f"drop {item.name}":
-                player.drop_item(item)
-                room[room_type].receive_item(item)
-                print(f"You dropped the {item.name}")
+        words = action.split()
+        if len(words) > 1 and words[0] == 'drop':
+            for word in words:
+                for item in player.items:
+                    if word == item.name:
+                        player.drop_item(item)
+                        room[type].receive_item(item)
+                        print(f"You dropped the {item.name}")
 
     elif choice is 'e':
-        room[room_type].print_items()
+        room[type].print_items()
         action = input(f"[take item-name] to take an item or enter to go back: ")
-        for item in room[room_type].items:
-            if action == f"take {item.name}":
-                room[room_type].give_item(item)
-                player.take_item(item)
-                print(f"You took the {item.name}")
+        words = action.split()
+        if len(words) > 1 and words[0] == 'take':
+            for word in words:
+                for item in room[type].items:
+                    if word == item.name:
+                        room[type].give_item(item)
+                        player.take_item(item)
+                        print(f"You took the {item.name}")
 
     elif choice is 'a':
         move_options = [" ['q'] quit"]
-        for move in moves[room_type]:
+        for move in moves[type]:
             move_options.append(f"{[move['dir']]} {room[move['dest']].name} ")
         choice = input(f"Where would you like to go?" + ' '.join(move_options) + ' ')
-        prevRoom = room_type
-        for move in moves[room_type]:
+        prevRoom = type
+        for move in moves[type]:
             if move['dir'] is choice:
                 move_options = [' [q] quit']
                 player.move_rooms(room[move['dest']])
-                room_type = move['dest']
-        if prevRoom == room_type:
+                type = move['dest']
+        if prevRoom == type:
             print('Invalid input, try again...')
     elif choice is 'q':
         break
