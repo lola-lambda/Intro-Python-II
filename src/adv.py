@@ -23,6 +23,8 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Associate current room with direction & destination
+
 moves = { 
     'outside': [{'dir': 'n', 'dest': 'foyer'},],
     'foyer': [{'dir': 's', 'dest': 'outside'}, {'dir': 'n', 'dest': 'overlook'}, {'dir': 'e', 'dest': 'narrow'}],
@@ -31,7 +33,7 @@ moves = {
     'treasure': [{'dir': 's', 'dest': 'narrow'},]
 }
 
-name = input("Hello there, what is your name? ")
+name = input("Hello there, dear adventurer, what is your name? ")
 room_type = 'outside'
 player = Player(name, room[room_type])
 
