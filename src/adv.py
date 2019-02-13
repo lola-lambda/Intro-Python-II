@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -21,31 +23,32 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+moves = { 
+    'outside': [{'dir': 'n', 'dest': 'foyer'},],
+    'foyer': [{'dir': 's', 'dest': 'outside'}, {'dir': 'n', 'dest': 'overlook'}, {'dir': 'e', 'dest': 'narrow'}],
+    'overlook': [{'dir': 's', 'dest': 'foyer'},],
+    'narrow': [{'dir': 'w', 'dest': 'foyer'}, {'dir': 'n', 'dest': 'treasure'}],
+    'treasure': [{'dir': 's', 'dest': 'narrow'},]
+}
 
-# Link rooms together
+name = input("Hello there, what is your name? ")
+room_type = 'outside'
+player = Player(name, room[room_type])
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+print(f"Welcome, {player.name}!") 
+next = ''
 
-#
-# Main
-#
-
-# Make a new player object that is currently in the 'outside' room.
-
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while not next is 'q':
+    print(f"You are at the {player.room.name}. {player.room.desc}")
+    move_options = [" ['q'] Quit'"]
+    for move in moves[room_type]:
+        move_options.append(f"{[move['dir']]} {room[move['dest']].name} ")
+    next = input(f"Where would you like to go?" + ' '.join(move_options) + ' ')
+    prevRoom = room_type
+    for move in moves[room_type]:
+        if move['dir'] is next:
+            move_options = [' [q] quit']
+            player.move_rooms(room[move['dest']])
+            room_type = move['dest']
+    if prevRoom == room_type:
+        print('Invalid option, try again...')
