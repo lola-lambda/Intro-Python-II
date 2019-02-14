@@ -1,6 +1,8 @@
 from room import Room
 from player import Player
 from item import Item
+from npc import NPC
+
 
 # Declare all the items
 
@@ -43,6 +45,15 @@ room = {
                     [item['bottle'], item['robe'], item['gem']])
 }
 
+# Declare all the NPCs
+npc = {
+    'geralt': NPC("Geralt of Rivia", room['overlook'], []),
+    'triss': NPC("Triss Merigold", room['foyer'], []),
+    'yennefer': NPC("Yennefer", room['narrow'], []),
+    'kiera': NPC("Kiera Metz", room['treasure'], []),
+    'emhyr': NPC("Emhyr var Emereis", room['overlook'], []),
+    'ciri': NPC("Cirilla", room['outside'], [])
+}
 
 # Associate current room with direction & destination
 
